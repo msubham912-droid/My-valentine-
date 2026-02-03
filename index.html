@@ -1,9 +1,13 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Moulima 💖 Will You Be My Valentine?</title>
+
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
@@ -81,71 +85,116 @@
       font-family: 'Pacifico', cursive;
     }
 
-    iframe {
-      display: none;
+    /* ❤️ Heart Animation */
+    .heart {
+      position: fixed;
+      font-size: 24px;
+      animation: pop 1.5s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0) translateY(0);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.5) translateY(-80px);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0.8) translateY(-150px);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<h1>Moulima 💖</h1>
+  <h1>Moulima 💖</h1>
 
-<div class="photos">
-  <div class="card">
-    <img src="img1.jpg">
-    <div class="caption">Every smile of yours feels like home.</div>
+  <div class="photos">
+    <div class="card">
+      <img src="img1.jpg">
+      <div class="caption">Every smile of yours feels like home.</div>
+    </div>
+
+    <div class="card">
+      <img src="img2.jpg">
+      <div class="caption">Those eyes… they chose my heart without asking.</div>
+    </div>
+
+    <div class="card">
+      <img src="img3.jpg">
+      <div class="caption">In every version of you, I find love.</div>
+    </div>
+
+    <div class="card">
+      <img src="img4.jpg">
+      <div class="caption">Soft moments, forever memories.</div>
+    </div>
+
+    <div class="card">
+      <img src="img5.jpg">
+      <div class="caption">If love had a face, it would look like this.</div>
+    </div>
   </div>
 
-  <div class="card">
-    <img src="img2.jpg">
-    <div class="caption">Those eyes… they chose my heart without asking.</div>
+  <div class="question">
+    Will you be my Valentine? 🥹💘
   </div>
 
-  <div class="card">
-    <img src="img3.jpg">
-    <div class="caption">In every version of you, I find love.</div>
+  <button id="yes" onclick="sayYes()">Yes 💖</button>
+  <button id="no" onmouseover="moveNo()">No 🙈</button>
+
+  <div id="message">
+    Yayyyy!! 💞<br>
+    I knew it… my heart already chose you 🫂💖
   </div>
 
-  <div class="card">
-    <img src="img4.jpg">
-    <div class="caption">Soft moments, forever memories.</div>
-  </div>
+  <!-- 🎵 Song (plays on Yes tap) -->
+  <audio id="loveSong">
+    <source src="song.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
-  <div class="card">
-    <img src="img5.jpg">
-    <div class="caption">If love had a face, it would look like this.</div>
-  </div>
-</div>
+  <script>
+    function moveNo() {
+      const no = document.getElementById("no");
+      no.style.left = Math.random() * (window.innerWidth - 100) + "px";
+      no.style.top = Math.random() * (window.innerHeight - 100) + "px";
+    }
 
-<div class="question">
-  Will you be my Valentine? 🥹💘
-</div>
+    function sayYes() {
+      document.getElementById("message").style.display = "block";
 
-<button id="yes" onclick="sayYes()">Yes 💖</button>
-<button id="no" onmouseover="moveNo()">No 🙈</button>
+      // Play song 🎶
+      const song = document.getElementById("loveSong");
+      song.play();
 
-<div id="message">
-  Yayyyy!! 💞  
-  I knew it… my heart already chose you 🫂💖
-</div>
+      // Heart burst 💖
+      for (let i = 0; i < 30; i++) {
+        createHeart();
+      }
+    }
 
-<!-- Background Music -->
-<iframe width="0" height="0"
-src="https://www.youtube.com/embed/9jz6Vd8vMks?autoplay=1&loop=1">
-</iframe>
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "❤️";
 
-<script>
-  function moveNo() {
-    const no = document.getElementById("no");
-    no.style.left = Math.random() * (window.innerWidth - 100) + "px";
-    no.style.top = Math.random() * (window.innerHeight - 100) + "px";
-  }
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = (window.innerHeight - 50) + "px";
+      heart.style.fontSize = (Math.random() * 20 + 20) + "px";
 
-  function sayYes() {
-    document.getElementById("message").style.display = "block";
-  }
-</script>
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 1500);
+    }
+  </script>
 
 </body>
 </html>
