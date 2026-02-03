@@ -202,7 +202,7 @@
       for (let i = 0; i < count; i++) {
         const heart = document.createElement("div");
         heart.className = "heart";
-        heart.innerText = "💖";
+        heart.innerText = "❤️";
         heart.style.left = (x + (Math.random() * 120 - 60)) + "px";
         heart.style.top = (y + (Math.random() * 120 - 60)) + "px";
         heart.style.fontSize = (Math.random() * 20 + 18) + "px";
@@ -230,8 +230,8 @@
 
     function moveNo() {
       const no = document.getElementById("no");
-      no.style.left = Math.random() * (window.innerWidth - 100) + "px";
-      no.style.top = Math.random() * (window.innerHeight - 100) + "px";
+      no.style.left = Math.random() * (window.innerWidth - 50) + "px";
+      no.style.top = Math.random() * (window.innerHeight - 50) + "px";
     }
 
     function sayYes() {
