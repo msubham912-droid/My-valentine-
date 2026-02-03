@@ -1,255 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Moulima 💖 Will You Be My Valentine?</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Moulima 💖</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-
-  <style>
+<style>
     body {
-      margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-      text-align: center;
-      color: #5a0c2e;
-      overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        text-align: center;
+        overflow-x: hidden;
     }
 
     h1 {
-      font-family: 'Pacifico', cursive;
-      font-size: 3rem;
-      margin-top: 30px;
+        color: #fff;
+        margin-top: 30px;
+        font-size: 2.2rem;
     }
 
-    /* ✨ Hint text */
-    #hintText {
-      font-family: 'Pacifico', cursive;
-      font-size: 1.7rem;
-      color: #7a1337;
-      margin-top: 20px;
-      opacity: 0.9;
-      animation: floatText 2.5s ease-in-out infinite;
+    .gallery {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        padding: 20px;
     }
 
-    @keyframes floatText {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-      100% { transform: translateY(0); }
+    .gallery img {
+        width: 200px;
+        height: auto;
+        border-radius: 20px;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+        transition: transform 0.3s ease;
     }
 
-    .photos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 30px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 10px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-      transition: transform 0.3s;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: scale(1.05);
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 15px;
-    }
-
-    /* 🔒 Blurred state */
-    .blurred-card img {
-      filter: blur(12px);
-      transition: filter 0.8s ease;
-    }
-
-    .blurred-card .caption {
-      opacity: 0;
-      transition: opacity 0.8s ease;
-    }
-
-    /* 🔓 Revealed state */
-    .blurred-card.revealed img {
-      filter: blur(0);
-    }
-
-    .blurred-card.revealed .caption {
-      opacity: 1;
-    }
-
-    .caption {
-      margin-top: 10px;
-      font-size: 0.95rem;
-    }
-
-    #secretNote {
-      display: none;
-      font-size: 1.6rem;
-      font-family: 'Pacifico', cursive;
-      margin: 20px;
+    .gallery img:hover {
+        transform: scale(1.05);
     }
 
     .question {
-      font-size: 2rem;
-      margin: 35px 0 20px;
-      font-family: 'Pacifico', cursive;
+        font-size: 1.8rem;
+        color: white;
+        margin-top: 20px;
     }
 
-    /* 💕 Buttons (smaller & elegant) */
     button {
-      padding: 10px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      margin: 8px;
+        padding: 12px 28px;
+        font-size: 1.2rem;
+        margin: 15px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        background: white;
+        color: #ff5e78;
+        font-weight: bold;
+        transition: transform 0.2s;
     }
 
-    #yes {
-      background: #ff4d6d;
-      color: white;
+    button:hover {
+        transform: scale(1.1);
     }
 
-    #no {
-      background: #aaa;
-      position: absolute;
-    }
-
-    #message {
-      font-size: 2rem;
-      margin-top: 30px;
-      display: none;
-      font-family: 'Pacifico', cursive;
-    }
-
-    /* ❤️ Hearts */
+    /* 💖 Heart animation */
     .heart {
-      position: fixed;
-      font-size: 24px;
-      animation: pop 1.5s ease-out forwards;
-      pointer-events: none;
+        position: fixed;
+        font-size: 24px;
+        animation: floatUp 2.5s linear forwards;
+        pointer-events: none;
     }
 
-    @keyframes pop {
-      0% { transform: scale(0); opacity: 1; }
-      50% { transform: scale(1.5) translateY(-80px); }
-      100% { transform: scale(0.8) translateY(-150px); opacity: 0; }
+    @keyframes floatUp {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-200px) scale(1.5);
+            opacity: 0;
+        }
     }
-
-    /* 📱 Mobile polish */
-    @media (max-width: 600px) {
-      h1 { font-size: 2.3rem; }
-      .question { font-size: 1.6rem; }
-      button { font-size: 0.95rem; padding: 8px 18px; }
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
-  <h1>Moulima 💖</h1>
+<h1>Moulima 💕</h1>
 
-  <div id="hintText">
-    Tap a memory to see it clearly 💗
-  </div>
+<div class="gallery">
+    <!-- replace src with your uploaded images -->
+    <img src="img1.jpg" alt="Memory 1">
+    <img src="img2.jpg" alt="Memory 2">
+    <img src="img3.jpg" alt="Memory 3">
+</div>
 
-  <div class="photos">
-    <div class="card blurred-card" onclick="revealCard(this)">
-      <img src="img1.jpg">
-      <div class="caption">Every smile of yours feels like home.</div>
-    </div>
+<div class="question">Will you be my Valentine? 💘</div>
 
-    <div class="card blurred-card" onclick="revealCard(this)">
-      <img src="img2.jpg">
-      <div class="caption">Those eyes… they chose my heart without asking.</div>
-    </div>
+<button onclick="yesClicked()">Yes 💖</button>
+<button onclick="noClicked()">No 😜</button>
 
-    <div class="card blurred-card" onclick="revealCard(this)">
-      <img src="img3.jpg">
-      <div class="caption">In every version of you, I find love.</div>
-    </div>
+<script>
+    // 💗 Create hearts everywhere
+    function createHearts(x, y) {
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerText = "💖";
 
-    <div class="card blurred-card" onclick="revealCard(this)">
-      <img src="img4.jpg">
-      <div class="caption">Soft moments, forever memories.</div>
-    </div>
+            heart.style.left = (x + Math.random() * 60 - 30) + "px";
+            heart.style.top = (y + Math.random() * 60 - 30) + "px";
 
-    <div class="card blurred-card" onclick="revealCard(this)">
-      <img src="img5.jpg">
-      <div class="caption">If love had a face, it would look like this.</div>
-    </div>
-  </div>
+            document.body.appendChild(heart);
 
-  <div id="secretNote">
-    You didn’t just see the pictures…  
-    you just walked through my favorite memories 💞
-  </div>
-
-  <div class="question">
-    Will you be my Valentine? 🥹💘
-  </div>
-
-  <button id="yes" onclick="sayYes()">Yes 💖</button>
-  <button id="no" onmouseover="moveNo()">No 🙈</button>
-
-  <div id="message">
-    Yayyyy!! 💞<br>
-    I knew it… my heart already chose you 🫂💖
-  </div>
-
-  <audio id="loveSong">
-    <source src="song.mp3" type="audio/mpeg">
-  </audio>
-
-  <script>
-    let revealedCount = 0;
-
-    function revealCard(card) {
-      if (!card.classList.contains("revealed")) {
-        card.classList.add("revealed");
-        revealedCount++;
-
-        document.getElementById("hintText").style.display = "none";
-      }
-
-      if (revealedCount === 5) {
-        setTimeout(() => {
-          document.getElementById("secretNote").style.display = "block";
-        }, 600);
-      }
+            setTimeout(() => {
+                heart.remove();
+            }, 2500);
+        }
     }
 
-    function moveNo() {
-      const no = document.getElementById("no");
-      no.style.left = Math.random() * (window.innerWidth - 100) + "px";
-      no.style.top = Math.random() * (window.innerHeight - 100) + "px";
+    // Attach heart pop to images
+    document.querySelectorAll(".gallery img").forEach(img => {
+        img.addEventListener("click", (e) => {
+            createHearts(e.clientX, e.clientY);
+        });
+    });
+
+    function yesClicked() {
+        alert("YAYYYY 💖💖💖 I knew it! My heart already chose you 😭✨");
     }
 
-    function sayYes() {
-      document.getElementById("message").style.display = "block";
-      document.getElementById("loveSong").play();
-      for (let i = 0; i < 30; i++) createHeart();
+    function noClicked() {
+        alert("Hmmmm 😏 Are you suuure? My heart says YES ❤️");
     }
-
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerText = "💖";
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.top = (window.innerHeight - 50) + "px";
-      heart.style.fontSize = (Math.random() * 20 + 20) + "px";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 1500);
-    }
-  </script>
+</script>
 
 </body>
 </html>
