@@ -1,0 +1,151 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Moulima 💖 Will You Be My Valentine?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      text-align: center;
+      color: #5a0c2e;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      margin-top: 30px;
+    }
+
+    .photos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 10px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 15px;
+    }
+
+    .caption {
+      margin-top: 10px;
+      font-size: 0.95rem;
+    }
+
+    .question {
+      font-size: 2rem;
+      margin: 40px 0 20px;
+      font-family: 'Pacifico', cursive;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    #yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    #no {
+      background: #aaa;
+      position: absolute;
+    }
+
+    #message {
+      font-size: 2rem;
+      margin-top: 30px;
+      display: none;
+      font-family: 'Pacifico', cursive;
+    }
+
+    iframe {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Moulima 💖</h1>
+
+<div class="photos">
+  <div class="card">
+    <img src="img1.jpg">
+    <div class="caption">Every smile of yours feels like home.</div>
+  </div>
+
+  <div class="card">
+    <img src="img2.jpg">
+    <div class="caption">Those eyes… they chose my heart without asking.</div>
+  </div>
+
+  <div class="card">
+    <img src="img3.jpg">
+    <div class="caption">In every version of you, I find love.</div>
+  </div>
+
+  <div class="card">
+    <img src="img4.jpg">
+    <div class="caption">Soft moments, forever memories.</div>
+  </div>
+
+  <div class="card">
+    <img src="img5.jpg">
+    <div class="caption">If love had a face, it would look like this.</div>
+  </div>
+</div>
+
+<div class="question">
+  Will you be my Valentine? 🥹💘
+</div>
+
+<button id="yes" onclick="sayYes()">Yes 💖</button>
+<button id="no" onmouseover="moveNo()">No 🙈</button>
+
+<div id="message">
+  Yayyyy!! 💞  
+  I knew it… my heart already chose you 🫂💖
+</div>
+
+<!-- Background Music -->
+<iframe width="0" height="0"
+src="https://www.youtube.com/embed/9jz6Vd8vMks?autoplay=1&loop=1">
+</iframe>
+
+<script>
+  function moveNo() {
+    const no = document.getElementById("no");
+    no.style.left = Math.random() * (window.innerWidth - 100) + "px";
+    no.style.top = Math.random() * (window.innerHeight - 100) + "px";
+  }
+
+  function sayYes() {
+    document.getElementById("message").style.display = "block";
+  }
+</script>
+
+</body>
+</html>
