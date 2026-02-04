@@ -30,19 +30,21 @@ body.night{
   align-items:center;
 }
 .lock input{
-  padding:12px;
+  padding:12px 20px;
   border-radius:25px;
   border:none;
   margin-top:15px;
+  font-size:1rem;
   text-align:center;
 }
 .lock button{
   margin-top:15px;
-  padding:10px 25px;
+  padding:12px 30px;
   border:none;
   border-radius:25px;
   background:#ff4b6e;
   color:white;
+  font-size:1rem;
   cursor:pointer;
 }
 
@@ -93,12 +95,12 @@ body.night{
   max-width:700px;
   margin:auto;
   line-height:1.8;
+  font-size:1.1rem;
 }
 
-/* 3D GALLERY */
+/* GALLERY */
 .gallery{
   padding:80px 20px;
-  perspective:1200px;
 }
 .cards{
   display:grid;
@@ -106,19 +108,18 @@ body.night{
   gap:30px;
   max-width:1000px;
   margin:auto;
-  transform-style:preserve-3d;
 }
 .card{
   position:relative;
   border-radius:20px;
   overflow:hidden;
   cursor:pointer;
-  transform:rotateY(-12deg) rotateX(4deg);
-  transition:transform .8s cubic-bezier(.2,.8,.2,1), box-shadow .8s;
+  transform:rotateY(-10deg) rotateX(4deg);
+  transition:.8s;
   box-shadow:0 25px 50px rgba(0,0,0,.35);
 }
 .card:hover{
-  transform:rotateY(0deg) rotateX(0deg) translateZ(40px);
+  transform:rotateY(0) rotateX(0) scale(1.03);
 }
 .card img{
   width:100%;
@@ -129,7 +130,7 @@ body.night{
 }
 .card.revealed img{
   filter:blur(0);
-  transform:scale(1.08);
+  transform:scale(1.1);
 }
 .card .text{
   position:absolute;
@@ -138,11 +139,11 @@ body.night{
   align-items:center;
   justify-content:center;
   background:rgba(0,0,0,.45);
-  padding:15px;
+  font-size:1.1rem;
 }
 .card.revealed .text{opacity:0}
 
-/* FINAL QUESTION */
+/* FINAL */
 .final{
   padding:80px 20px;
 }
@@ -156,16 +157,16 @@ body.night{
   justify-content:center;
 }
 .buttons button{
-  padding:15px 35px;
+  padding:14px 30px;
   border:none;
   border-radius:30px;
-  font-size:1.1rem;
+  font-size:1rem;
   cursor:pointer;
 }
 .yes{background:#ff4b6e;color:white}
 .no{background:white;color:#ff4b6e}
 
-/* SECRET PAGE */
+/* SECRET */
 #secret{
   display:none;
   min-height:100vh;
@@ -188,13 +189,6 @@ body.night{
   0%,100%{transform:scale(1)}
   50%{transform:scale(1.15)}
 }
-.constellation{
-  margin-top:30px;
-  font-size:1.2rem;
-  opacity:0;
-  animation:appear 4s ease forwards;
-}
-@keyframes appear{to{opacity:1}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 </style>
 </head>
@@ -213,8 +207,8 @@ body.night{
 <button class="music-btn" onclick="toggleMusic()">🔊</button>
 <button class="mode-btn" onclick="toggleMode()">🌙</button>
 
-<audio id="bgMusic" autoplay loop>
-  <source src="song.mp3">
+<audio id="bgMusic" loop>
+  <source src="song.mp3" type="audio/mpeg">
 </audio>
 
 <div class="intro">
@@ -263,82 +257,70 @@ body.night{
 <div id="secret">
   <h1>❤️ I Choose You ❤️</h1>
   <div class="pulse"></div>
-  <p>
-    This wasn’t a question.<br>
-    It was a promise I wanted you to hear.
-  </p>
-  <div class="constellation">
-    ✨ M ✦ + ✦ S ✨<br>
-    (some stars are meant to align)
-  </div>
+  <p>This wasn’t a question.<br>It was a promise.</p>
 </div>
 
 <script>
-/* UNLOCK (FIXED) */
+const music = document.getElementById("bgMusic");
+let playing = true;
+
+/* UNLOCK + MUSIC START */
 function unlock(){
   const input = document.getElementById("pass").value.trim().toLowerCase();
   if(input === "sona"){
-    document.getElementById("lock").style.display = "none";
-    document.getElementById("content").style.display = "block";
+    document.getElementById("lock").style.display="none";
+    document.getElementById("content").style.display="block";
+    music.volume = 0.7;
+    music.play().catch(()=>{});
     typeText();
   } else {
     alert("Hmm… try again 💭");
   }
 }
 
-/* ENTER KEY SUPPORT */
-document.getElementById("pass").addEventListener("keydown", e => {
-  if(e.key === "Enter") unlock();
+/* ENTER SUPPORT */
+document.getElementById("pass").addEventListener("keydown",e=>{
+  if(e.key==="Enter") unlock();
 });
 
 /* TYPE EFFECT */
 const text = `Moulima,
 You made ordinary days feel meaningful.
-This is my quiet promise —
-I choose you. Every day. 💗`;
-let i = 0;
+I choose you. Every single day. 💗`;
+let i=0;
 function typeText(){
-  if(i < text.length){
-    document.getElementById("typedText").innerHTML += text.charAt(i++);
-    setTimeout(typeText, 40);
+  if(i<text.length){
+    typedText.innerHTML+=text.charAt(i++);
+    setTimeout(typeText,40);
   }
 }
 
-/* REVEAL */
-function reveal(c){ c.classList.add("revealed"); }
-
-/* YES → REDIRECT */
+/* INTERACTIONS */
+function reveal(c){c.classList.add("revealed")}
 function yes(){
-  if(navigator.vibrate) navigator.vibrate([200,100,200]);
-  document.getElementById("content").style.display = "none";
-  document.getElementById("secret").style.display = "block";
+  document.getElementById("content").style.display="none";
+  document.getElementById("secret").style.display="block";
 }
-
-/* NO */
 function moveNo(b){
   b.style.position="absolute";
   b.style.left=Math.random()*70+"vw";
   b.style.top=Math.random()*70+"vh";
 }
-
-/* MUSIC */
-const music = document.getElementById("bgMusic");
-let playing = true;
 function toggleMusic(){
-  playing ? music.pause() : music.play();
-  playing = !playing;
+  playing?music.pause():music.play();
+  playing=!playing;
+}
+function toggleMode(){
+  document.body.classList.toggle("night");
 }
 
-/* MODE */
-function toggleMode(){ document.body.classList.toggle("night"); }
-
-/* HEARTS */
+/* FLOATING HEARTS */
 setInterval(()=>{
-  const h = document.createElement("div");
-  h.className = "heart";
-  h.innerText = "❤️";
-  h.style.left = Math.random()*100+"vw";
-  h.style.fontSize = Math.random()*20+15+"px";
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerText="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=Math.random()*20+15+"px";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),8000);
 },500);
