@@ -30,21 +30,19 @@ body.night{
   align-items:center;
 }
 .lock input{
-  padding:12px 20px;
+  padding:12px;
   border-radius:25px;
   border:none;
   margin-top:15px;
-  font-size:1rem;
   text-align:center;
 }
 .lock button{
   margin-top:15px;
-  padding:12px 30px;
+  padding:10px 25px;
   border:none;
   border-radius:25px;
   background:#ff4b6e;
   color:white;
-  font-size:1rem;
   cursor:pointer;
 }
 
@@ -95,12 +93,12 @@ body.night{
   max-width:700px;
   margin:auto;
   line-height:1.8;
-  font-size:1.1rem;
 }
 
-/* GALLERY */
+/* 3D GALLERY */
 .gallery{
   padding:80px 20px;
+  perspective:1200px;
 }
 .cards{
   display:grid;
@@ -108,18 +106,19 @@ body.night{
   gap:30px;
   max-width:1000px;
   margin:auto;
+  transform-style:preserve-3d;
 }
 .card{
   position:relative;
   border-radius:20px;
   overflow:hidden;
   cursor:pointer;
-  transform:rotateY(-10deg) rotateX(4deg);
-  transition:.8s;
+  transform:rotateY(-12deg) rotateX(4deg);
+  transition:transform .8s cubic-bezier(.2,.8,.2,1), box-shadow .8s;
   box-shadow:0 25px 50px rgba(0,0,0,.35);
 }
 .card:hover{
-  transform:rotateY(0) rotateX(0) scale(1.03);
+  transform:rotateY(0deg) rotateX(0deg) translateZ(40px);
 }
 .card img{
   width:100%;
@@ -130,7 +129,7 @@ body.night{
 }
 .card.revealed img{
   filter:blur(0);
-  transform:scale(1.1);
+  transform:scale(1.08);
 }
 .card .text{
   position:absolute;
@@ -139,11 +138,11 @@ body.night{
   align-items:center;
   justify-content:center;
   background:rgba(0,0,0,.45);
-  font-size:1.1rem;
+  padding:15px;
 }
 .card.revealed .text{opacity:0}
 
-/* FINAL */
+/* FINAL QUESTION */
 .final{
   padding:80px 20px;
 }
@@ -157,16 +156,16 @@ body.night{
   justify-content:center;
 }
 .buttons button{
-  padding:14px 30px;
+  padding:15px 35px;
   border:none;
   border-radius:30px;
-  font-size:1rem;
+  font-size:1.1rem;
   cursor:pointer;
 }
 .yes{background:#ff4b6e;color:white}
 .no{background:white;color:#ff4b6e}
 
-/* SECRET */
+/* SECRET PAGE */
 #secret{
   display:none;
   min-height:100vh;
@@ -189,6 +188,13 @@ body.night{
   0%,100%{transform:scale(1)}
   50%{transform:scale(1.15)}
 }
+.constellation{
+  margin-top:30px;
+  font-size:1.2rem;
+  opacity:0;
+  animation:appear 4s ease forwards;
+}
+@keyframes appear{to{opacity:1}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 </style>
 </head>
@@ -207,6 +213,7 @@ body.night{
 <button class="music-btn" onclick="toggleMusic()">🔊</button>
 <button class="mode-btn" onclick="toggleMode()">🌙</button>
 
+<!-- ❌ autoplay REMOVED -->
 <audio id="bgMusic" loop>
   <source src="song.mp3" type="audio/mpeg">
 </audio>
@@ -257,36 +264,47 @@ body.night{
 <div id="secret">
   <h1>❤️ I Choose You ❤️</h1>
   <div class="pulse"></div>
-  <p>This wasn’t a question.<br>It was a promise.</p>
+  <p>
+    This wasn’t a question.<br>
+    It was a promise I wanted you to hear.
+  </p>
+  <div class="constellation">
+    ✨ M ✦ + ✦ S ✨<br>
+    (some stars are meant to align)
+  </div>
 </div>
 
 <script>
+/* MUSIC */
 const music = document.getElementById("bgMusic");
 let playing = true;
 
-/* UNLOCK + MUSIC START */
+/* UNLOCK — MUSIC STARTS HERE */
 function unlock(){
   const input = document.getElementById("pass").value.trim().toLowerCase();
   if(input === "sona"){
-    document.getElementById("lock").style.display="none";
-    document.getElementById("content").style.display="block";
+    document.getElementById("lock").style.display = "none";
+    document.getElementById("content").style.display = "block";
+
     music.volume = 0.7;
     music.play().catch(()=>{});
+
     typeText();
   } else {
     alert("Hmm… try again 💭");
   }
 }
 
-/* ENTER SUPPORT */
-document.getElementById("pass").addEventListener("keydown",e=>{
+/* ENTER KEY */
+document.getElementById("pass").addEventListener("keydown", e=>{
   if(e.key==="Enter") unlock();
 });
 
 /* TYPE EFFECT */
 const text = `Moulima,
 You made ordinary days feel meaningful.
-I choose you. Every single day. 💗`;
+This is my quiet promise —
+I choose you. Every day. 💗`;
 let i=0;
 function typeText(){
   if(i<text.length){
