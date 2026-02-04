@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moulima 💖</title>
+<title>Moulima ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 
@@ -34,6 +34,7 @@ body.night{
   border-radius:25px;
   border:none;
   margin-top:15px;
+  text-align:center;
 }
 .lock button{
   margin-top:15px;
@@ -42,6 +43,7 @@ body.night{
   border-radius:25px;
   background:#ff4b6e;
   color:white;
+  cursor:pointer;
 }
 
 /* CONTROLS */
@@ -93,7 +95,7 @@ body.night{
   line-height:1.8;
 }
 
-/* ==== 3D GALLERY ==== */
+/* 3D GALLERY */
 .gallery{
   padding:80px 20px;
   perspective:1200px;
@@ -158,6 +160,7 @@ body.night{
   border:none;
   border-radius:30px;
   font-size:1.1rem;
+  cursor:pointer;
 }
 .yes{background:#ff4b6e;color:white}
 .no{background:white;color:#ff4b6e}
@@ -191,13 +194,8 @@ body.night{
   opacity:0;
   animation:appear 4s ease forwards;
 }
-@keyframes appear{
-  to{opacity:1}
-}
-@keyframes fadeIn{
-  from{opacity:0}
-  to{opacity:1}
-}
+@keyframes appear{to{opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 </style>
 </head>
 
@@ -205,9 +203,9 @@ body.night{
 
 <!-- LOCK -->
 <div class="lock" id="lock">
-  <h2>💌 what I call you </h2>
+  <h2>💌 what I call you</h2>
   <input id="pass" placeholder="Type here...">
-  <button onclick="unlock()">Unlock 💖</button>
+  <button onclick="unlock()">Unlock ❤️</button>
 </div>
 
 <div id="content" style="display:none">
@@ -261,7 +259,7 @@ body.night{
 
 </div>
 
-<!-- SECRET PAGE -->
+<!-- SECRET -->
 <div id="secret">
   <h1>❤️ I Choose You ❤️</h1>
   <div class="pulse"></div>
@@ -270,43 +268,50 @@ body.night{
     It was a promise I wanted you to hear.
   </p>
   <div class="constellation">
-    ✨ M ✦ + ✦ S ✨  
-    <br>
+    ✨ M ✦ + ✦ S ✨<br>
     (some stars are meant to align)
   </div>
 </div>
 
 <script>
-/* UNLOCK */
+/* UNLOCK (FIXED) */
 function unlock(){
-  if(pass.value.toLowerCase()=="sona"){
-    lock.style.display="none";
-    content.style.display="block";
+  const input = document.getElementById("pass").value.trim().toLowerCase();
+  if(input === "sona"){
+    document.getElementById("lock").style.display = "none";
+    document.getElementById("content").style.display = "block";
     typeText();
+  } else {
+    alert("Hmm… try again 💭");
   }
 }
 
-/* TYPE */
-const text=`Moulima,
+/* ENTER KEY SUPPORT */
+document.getElementById("pass").addEventListener("keydown", e => {
+  if(e.key === "Enter") unlock();
+});
+
+/* TYPE EFFECT */
+const text = `Moulima,
 You made ordinary days feel meaningful.
 This is my quiet promise —
 I choose you. Every day. 💗`;
-let i=0;
+let i = 0;
 function typeText(){
-  if(i<text.length){
-    typedText.innerHTML+=text.charAt(i++);
-    setTimeout(typeText,40);
+  if(i < text.length){
+    document.getElementById("typedText").innerHTML += text.charAt(i++);
+    setTimeout(typeText, 40);
   }
 }
 
 /* REVEAL */
-function reveal(c){c.classList.add("revealed")}
+function reveal(c){ c.classList.add("revealed"); }
 
-/* YES → DIRECT REDIRECT */
+/* YES → REDIRECT */
 function yes(){
   if(navigator.vibrate) navigator.vibrate([200,100,200]);
-  content.style.display="none";
-  secret.style.display="block";
+  document.getElementById("content").style.display = "none";
+  document.getElementById("secret").style.display = "block";
 }
 
 /* NO */
@@ -317,19 +322,23 @@ function moveNo(b){
 }
 
 /* MUSIC */
-const m=bgMusic;let p=true;
-function toggleMusic(){p?m.pause():m.play();p=!p}
+const music = document.getElementById("bgMusic");
+let playing = true;
+function toggleMusic(){
+  playing ? music.pause() : music.play();
+  playing = !playing;
+}
 
 /* MODE */
-function toggleMode(){document.body.classList.toggle("night")}
+function toggleMode(){ document.body.classList.toggle("night"); }
 
 /* HEARTS */
 setInterval(()=>{
-  let h=document.createElement("div");
-  h.className="heart";
-  h.innerText="❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=Math.random()*20+15+"px";
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerText = "❤️";
+  h.style.left = Math.random()*100+"vw";
+  h.style.fontSize = Math.random()*20+15+"px";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),8000);
 },500);
