@@ -2,242 +2,225 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You 💖</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>For You ✨</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: 'Poppins', sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
 
 body{
-    height:100vh;
-    overflow:hidden;
-    background: linear-gradient(-45deg,#ff9a9e,#fad0c4,#fbc2eb,#a6c1ee);
-    background-size:400% 400%;
-    animation: gradientBG 10s ease infinite;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+background:linear-gradient(270deg,#ff9a9e,#fbc2eb,#a6c1ee,#fad0c4);
+background-size:600% 600%;
+animation:bgMove 12s infinite ease;
 }
 
-/* Background animation */
-@keyframes gradientBG{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
-/* Floating hearts */
-.heart{
-    position:absolute;
-    font-size:20px;
-    animation: float 6s linear infinite;
-    opacity:0.8;
+/* Sparkles */
+.sparkle{
+position:absolute;
+width:6px;
+height:6px;
+background:white;
+border-radius:50%;
+opacity:.7;
+animation:float 6s linear infinite;
 }
 
 @keyframes float{
-    0%{
-        transform:translateY(100vh) scale(0.5);
-        opacity:0;
-    }
-    50%{opacity:1;}
-    100%{
-        transform:translateY(-10vh) scale(1.2);
-        opacity:0;
-    }
+from{transform:translateY(100vh);}
+to{transform:translateY(-10vh);}
 }
 
-/* First page */
-.container{
-    text-align:center;
-    z-index:2;
-    color:white;
+/* Card */
+.card{
+width:350px;
+height:500px;
+perspective:1000px;
 }
 
-.container h1{
-    font-size:28px;
-    margin-bottom:20px;
+.inner{
+width:100%;
+height:100%;
+position:relative;
+transition:transform .9s;
+transform-style:preserve-3d;
 }
 
-.container p{
-    margin-bottom:30px;
-    font-size:16px;
+.card.flip .inner{
+transform:rotateY(180deg);
 }
 
+.face{
+position:absolute;
+width:100%;
+height:100%;
+backface-visibility:hidden;
+border-radius:20px;
+padding:25px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+
+background:rgba(255,255,255,.15);
+backdrop-filter:blur(20px);
+box-shadow:0 10px 30px rgba(0,0,0,.25);
+color:white;
+}
+
+/* Back face */
+.back{
+transform:rotateY(180deg);
+}
+
+/* Button ripple */
 button{
-    padding:15px 40px;
-    border:none;
-    border-radius:50px;
-    font-size:18px;
-    background:white;
-    color:#ff4e88;
-    box-shadow:0 10px 20px rgba(0,0,0,0.2);
-    cursor:pointer;
-    transition:0.3s;
+margin-top:20px;
+padding:14px 30px;
+border:none;
+border-radius:30px;
+background:white;
+color:#ff4e88;
+font-weight:600;
+cursor:pointer;
+position:relative;
+overflow:hidden;
 }
 
-button:hover{
-    transform:scale(1.1);
+button::after{
+content:"";
+position:absolute;
+width:0;
+height:0;
+border-radius:50%;
+background:rgba(0,0,0,.1);
+transform:translate(-50%,-50%);
 }
 
-/* Message page */
-.message-page{
-    position:absolute;
-    width:100%;
-    height:100%;
-    background:rgba(255,255,255,0.15);
-    backdrop-filter:blur(15px);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-    padding:20px;
-    opacity:0;
-    pointer-events:none;
-    transition:0.8s;
+button:active::after{
+width:200px;
+height:200px;
+transition:.4s;
 }
 
-.message-page.show{
-    opacity:1;
-    pointer-events:auto;
+/* Audio */
+img{
+width:100%;
+border-radius:12px;
+margin:10px 0;
 }
 
-.message-box{
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 15px 30px rgba(0,0,0,0.2);
-    max-width:350px;
-}
-
-/* Audio Card */
-.audio-card{
-    margin-top:20px;
-    width:100%;
-    max-width:300px;
-}
-
-.audio-img{
-    width:100%;
-    border-radius:15px 15px 0 0;
-}
-
-#visualizer{
-    width:100%;
-    height:80px;
-    display:block;
-    background:transparent;
+canvas{
+width:100%;
+height:70px;
 }
 
 audio{
-    width:100%;
-    border-radius:0 0 15px 15px;
+width:100%;
 }
+
+h2{color:#ff4e88;}
+p{margin:10px 0;}
 </style>
 </head>
 
 <body>
 
 <script>
-/* Floating hearts */
-for(let i=0;i<15;i++){
-    let heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="💖";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.animationDuration=(4+Math.random()*4)+"s";
-    heart.style.fontSize=(15+Math.random()*20)+"px";
-    document.body.appendChild(heart);
+/* Sparkles */
+for(let i=0;i<25;i++){
+let s=document.createElement("div");
+s.className="sparkle";
+s.style.left=Math.random()*100+"vw";
+s.style.animationDuration=(4+Math.random()*4)+"s";
+document.body.appendChild(s);
 }
 </script>
 
-<!-- First Page -->
-<div class="container" id="firstPage">
-    <h1>For You 💖</h1>
-    <p>This is something special just for you ✨</p>
-    <button onclick="openMessage()">Open It</button>
+<div class="card" id="card">
+<div class="inner">
+
+<!-- Front -->
+<div class="face">
+<h1>For You ✨</h1>
+<p>Tap to reveal something special</p>
+<button onclick="flip()">Open</button>
 </div>
 
-<!-- Message Page -->
-<div class="message-page" id="messagePage">
-    <div class="message-box">
-        <h2 style="color:#ff4e88;">Hey You ❤️</h2>
-        <p style="margin:15px 0;color:#444;">
-            You make my world brighter every single day ✨
-        </p>
+<!-- Back -->
+<div class="face back">
 
-        <div class="audio-card">
+<h2>Hey You ❤️</h2>
+<p>You make my world brighter every day ✨</p>
 
-            <!-- Cover Image -->
-            <img src="your-image.jpg" class="audio-img">
+<img src="your-image.jpg">
 
-            <!-- Visualizer -->
-            <canvas id="visualizer"></canvas>
+<canvas id="viz"></canvas>
 
-            <!-- Audio -->
-            <audio id="audio" controls>
-                <source src="love.mp3" type="audio/mpeg">
-            </audio>
+<audio id="audio" controls>
+<source src="love.mp3">
+</audio>
 
-        </div>
-    </div>
+</div>
+</div>
 </div>
 
 <script>
-function openMessage(){
-    document.getElementById("firstPage").style.display="none";
-    document.getElementById("messagePage").classList.add("show");
+function flip(){
+document.getElementById("card").classList.toggle("flip");
 }
 
-/* REAL SYNCED VISUALIZER */
-const audio = document.getElementById("audio");
-const canvas = document.getElementById("visualizer");
-const ctx = canvas.getContext("2d");
+/* Visualizer */
+const audio=document.getElementById("audio");
+const canvas=document.getElementById("viz");
+const ctx=canvas.getContext("2d");
 
-canvas.width = canvas.offsetWidth;
-canvas.height = canvas.offsetHeight;
+canvas.width=300;
+canvas.height=70;
 
-let audioCtx;
-let analyser;
-let source;
+let ac,an,src;
 
-audio.onplay = () => {
-    if(!audioCtx){
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioCtx.createAnalyser();
-        source = audioCtx.createMediaElementSource(audio);
-
-        source.connect(analyser);
-        analyser.connect(audioCtx.destination);
-
-        analyser.fftSize = 256;
-    }
-    animate();
+audio.onplay=()=>{
+if(!ac){
+ac=new AudioContext();
+an=ac.createAnalyser();
+src=ac.createMediaElementSource(audio);
+src.connect(an);
+an.connect(ac.destination);
+an.fftSize=128;
+}
+draw();
 };
 
-function animate(){
-    requestAnimationFrame(animate);
+function draw(){
+requestAnimationFrame(draw);
 
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-    analyser.getByteFrequencyData(dataArray);
+let buffer=new Uint8Array(an.frequencyBinCount);
+an.getByteFrequencyData(buffer);
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    const barWidth = (canvas.width / bufferLength) * 2;
-    let x = 0;
+let w=canvas.width/buffer.length;
 
-    for(let i=0;i<bufferLength;i++){
-        const barHeight = dataArray[i]/2;
-        ctx.fillStyle = "#ff4e88";
-        ctx.fillRect(x,canvas.height-barHeight,barWidth,barHeight);
-        x += barWidth + 1;
-    }
+for(let i=0;i<buffer.length;i++){
+let h=buffer[i]/2;
+ctx.fillStyle=`rgba(255,78,136,0.9)`;
+ctx.fillRect(i*w,canvas.height-h,w-2,h);
+}
 }
 </script>
 
