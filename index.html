@@ -8,48 +8,70 @@
 <style>
 body {
   margin: 0;
-  padding: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to bottom, #f7a8c3, #fcd6e3);
   overflow: hidden;
+  background: linear-gradient(to bottom, #f7a8c3, #fcd6e3);
+}
+
+/* Pages */
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  transition: transform 0.8s ease;
 }
 
-/* Floating Hearts */
-.heart {
-  position: absolute;
+.hidden {
+  transform: translateY(-100%);
+}
+
+/* Intro Page */
+.intro {
+  flex-direction: column;
+  text-align: center;
+  color: white;
+}
+
+.intro h1 {
+  font-size: 28px;
+}
+
+.btn {
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
   color: #ff4d88;
-  animation: float 6s infinite;
-  opacity: 0.6;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transition: 0.3s;
 }
 
-@keyframes float {
-  0% { transform: translateY(100vh) scale(0.5); }
-  100% { transform: translateY(-10vh) scale(1.2); }
+.btn:hover {
+  transform: scale(1.05);
 }
 
-/* Card */
+/* Card Page */
+.card-container {
+  justify-content: center;
+  align-items: center;
+}
+
 .card {
-  background: #fff;
+  background: white;
   width: 90%;
   max-width: 350px;
   border-radius: 25px;
   padding: 20px;
   text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  position: relative;
-  z-index: 10;
 }
 
-.card h2 {
-  font-weight: 500;
-  color: #555;
-}
-
-/* Image Container */
 .image-container {
   position: relative;
   margin-top: 15px;
@@ -65,7 +87,6 @@ body {
 .visualizer {
   position: absolute;
   bottom: 55px;
-  left: 0;
   width: 100%;
   height: 40px;
   display: flex;
@@ -83,16 +104,15 @@ body {
   transition: height 0.1s linear;
 }
 
-/* Audio Player */
+/* Audio */
 audio {
   position: absolute;
   bottom: 10px;
   left: 5%;
   width: 90%;
-  border-radius: 30px;
 }
 
-/* Footer Text */
+/* Text */
 .love-text {
   margin-top: 20px;
   font-size: 22px;
@@ -104,39 +124,44 @@ audio {
 </head>
 <body>
 
-<!-- Floating Hearts -->
-<div class="heart" style="left:10%;">💗</div>
-<div class="heart" style="left:30%; animation-duration:7s;">💖</div>
-<div class="heart" style="left:60%; animation-duration:5s;">💘</div>
-<div class="heart" style="left:80%; animation-duration:8s;">💕</div>
+<!-- INTRO PAGE -->
+<div class="page intro" id="page1">
+  <h1>I made something special for you 💖</h1>
+  <button class="btn" onclick="openCard()">Open It</button>
+</div>
 
-<div class="card">
-  <h2>Close your eyes and listen... this is straight from my heart 🎧💖</h2>
+<!-- CARD PAGE -->
+<div class="page card-container hidden" id="page2">
+  <div class="card">
+    <h3>Close your eyes and listen... 🎧💖</h3>
 
-  <div class="image-container">
-    <img src="your-image.jpg" alt="Her Image">
+    <div class="image-container">
+      <img src="your-image.jpg" alt="Her Image">
 
-    <!-- Visualizer -->
-    <div class="visualizer" id="visualizer"></div>
+      <div class="visualizer" id="visualizer"></div>
 
-    <!-- Audio Player -->
-    <audio id="audio" controls>
-      <source src="love.mp3" type="audio/mp3">
-    </audio>
-  </div>
+      <audio id="audio" controls>
+        <source src="your-audio.mp3" type="audio/mp3">
+      </audio>
+    </div>
 
-  <div class="love-text">
-    I Love You Forever ❤️
+    <div class="love-text">
+      I Love You Forever ❤️
+    </div>
   </div>
 </div>
 
 <script>
+function openCard() {
+  document.getElementById("page1").classList.add("hidden");
+  document.getElementById("page2").classList.remove("hidden");
+}
+
+/* Visualizer */
 const audio = document.getElementById("audio");
 const visualizer = document.getElementById("visualizer");
 
-// Create bars
-const barsCount = 30;
-for (let i = 0; i < barsCount; i++) {
+for (let i = 0; i < 30; i++) {
   const bar = document.createElement("div");
   bar.classList.add("bar");
   visualizer.appendChild(bar);
@@ -144,7 +169,6 @@ for (let i = 0; i < barsCount; i++) {
 
 const bars = document.querySelectorAll(".bar");
 
-// Audio Visualizer Setup
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const analyser = audioCtx.createAnalyser();
 const source = audioCtx.createMediaElementSource(audio);
