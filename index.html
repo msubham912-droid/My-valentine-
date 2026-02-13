@@ -134,7 +134,16 @@ width:100%;
 }
 
 h2{color:#ff4e88;}
-p{margin:10px 0;}
+
+/* Message fade animation */
+#messageText{
+margin:10px 0;
+transition:opacity .4s ease;
+cursor:pointer;
+}
+.fade{
+opacity:0;
+}
 </style>
 </head>
 
@@ -165,14 +174,17 @@ document.body.appendChild(s);
 <div class="face back">
 
 <h2>Hey You ❤️</h2>
-<p>You make my world brighter every day ✨</p>
 
-<img src="your-image.jpg">
+<p id="messageText">
+You make my world brighter every day ✨
+</p>
+
+<img src="cover.jpg">
 
 <canvas id="viz"></canvas>
 
 <audio id="audio" controls>
-<source src="love.mp3">
+<source src="music.mp3">
 </audio>
 
 </div>
@@ -180,11 +192,44 @@ document.body.appendChild(s);
 </div>
 
 <script>
+
+/***** CARD FLIP *****/
 function flip(){
 document.getElementById("card").classList.toggle("flip");
 }
 
-/* Visualizer */
+/***** MESSAGE ROTATOR *****/
+
+const messages = [
+"You make my world brighter every day ✨",
+"Talking to you is my favorite part of the day 💫",
+"You are my happy place 🌸",
+"Life feels softer when you're around 💖",
+"You turn ordinary moments into magic ✨",
+"Every smile of yours is priceless 🌟",
+"Being with you feels like home 🫶"
+];
+
+let msgIndex = 0;
+const msgEl = document.getElementById("messageText");
+
+function changeMessage(){
+msgEl.classList.add("fade");
+
+setTimeout(()=>{
+msgIndex = (msgIndex + 1) % messages.length;
+msgEl.textContent = messages[msgIndex];
+msgEl.classList.remove("fade");
+},400);
+}
+
+setInterval(changeMessage, 4000);
+
+/* tap to skip */
+msgEl.addEventListener("click", changeMessage);
+
+/***** VISUALIZER *****/
+
 const audio=document.getElementById("audio");
 const canvas=document.getElementById("viz");
 const ctx=canvas.getContext("2d");
@@ -218,10 +263,11 @@ let w=canvas.width/buffer.length;
 
 for(let i=0;i<buffer.length;i++){
 let h=buffer[i]/2;
-ctx.fillStyle=`rgba(255,78,136,0.9)`;
+ctx.fillStyle="rgba(255,78,136,0.9)";
 ctx.fillRect(i*w,canvas.height-h,w-2,h);
 }
 }
+
 </script>
 
 </body>
