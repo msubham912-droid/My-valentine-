@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>From My Heart 💖</title>
+<title>For You 💖</title>
 
 <style>
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
-  background: linear-gradient(to bottom, #f7a8c3, #fcd6e3);
+  background: linear-gradient(to bottom, #f8a5c2, #fcd6e3);
 }
 
 /* Pages */
@@ -21,11 +21,25 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.8s ease;
+  transition: opacity 0.8s ease;
 }
 
 .hidden {
-  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Floating Hearts */
+.heart {
+  position: absolute;
+  font-size: 20px;
+  animation: float 6s infinite linear;
+  opacity: 0.6;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh) scale(0.5); }
+  100% { transform: translateY(-10vh) scale(1.2); }
 }
 
 /* Intro Page */
@@ -37,6 +51,12 @@ body {
 
 .intro h1 {
   font-size: 28px;
+  animation: fadeIn 2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
 }
 
 .btn {
@@ -53,15 +73,10 @@ body {
 }
 
 .btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
-/* Card Page */
-.card-container {
-  justify-content: center;
-  align-items: center;
-}
-
+/* Card */
 .card {
   background: white;
   width: 90%;
@@ -70,6 +85,7 @@ body {
   padding: 20px;
   text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  animation: fadeIn 1s ease;
 }
 
 .image-container {
@@ -86,7 +102,7 @@ body {
 /* Visualizer */
 .visualizer {
   position: absolute;
-  bottom: 55px;
+  bottom: 60px;
   width: 100%;
   height: 40px;
   display: flex;
@@ -124,6 +140,12 @@ audio {
 </head>
 <body>
 
+<!-- Floating Hearts -->
+<div class="heart" style="left:10%; animation-duration:7s;">💖</div>
+<div class="heart" style="left:30%; animation-duration:6s;">💘</div>
+<div class="heart" style="left:60%; animation-duration:8s;">💕</div>
+<div class="heart" style="left:80%; animation-duration:5s;">💗</div>
+
 <!-- INTRO PAGE -->
 <div class="page intro" id="page1">
   <h1>I made something special for you 💖</h1>
@@ -131,7 +153,7 @@ audio {
 </div>
 
 <!-- CARD PAGE -->
-<div class="page card-container hidden" id="page2">
+<div class="page hidden" id="page2">
   <div class="card">
     <h3>Close your eyes and listen... 🎧💖</h3>
 
@@ -141,7 +163,7 @@ audio {
       <div class="visualizer" id="visualizer"></div>
 
       <audio id="audio" controls>
-        <source src="your-audio.mp3" type="audio/mp3">
+        <source src="love.mp3" type="audio/mp3">
       </audio>
     </div>
 
