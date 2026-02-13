@@ -24,14 +24,14 @@ body{
     align-items:center;
 }
 
-/* Gradient Animation */
+/* Background animation */
 @keyframes gradientBG{
     0%{background-position:0% 50%;}
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
 }
 
-/* Floating Hearts */
+/* Floating hearts */
 .heart{
     position:absolute;
     font-size:20px;
@@ -51,7 +51,7 @@ body{
     }
 }
 
-/* First Page */
+/* First page */
 .container{
     text-align:center;
     z-index:2;
@@ -84,7 +84,7 @@ button:hover{
     transform:scale(1.1);
 }
 
-/* Message Page */
+/* Message page */
 .message-page{
     position:absolute;
     width:100%;
@@ -117,27 +117,34 @@ button:hover{
 
 /* Audio Card */
 .audio-card{
-    margin-top:15px;
+    margin-top:20px;
+    width:100%;
+    max-width:300px;
 }
 
 .audio-img{
     width:100%;
-    max-width:250px;
-    border-radius:15px;
-    margin-bottom:15px;
-    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+    border-radius:15px 15px 0 0;
+}
+
+#visualizer{
+    width:100%;
+    height:80px;
+    display:block;
+    background:transparent;
 }
 
 audio{
     width:100%;
+    border-radius:0 0 15px 15px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Floating Hearts -->
 <script>
+/* Floating hearts */
 for(let i=0;i<15;i++){
     let heart=document.createElement("div");
     heart.className="heart";
@@ -161,17 +168,22 @@ for(let i=0;i<15;i++){
     <div class="message-box">
         <h2 style="color:#ff4e88;">Hey You ❤️</h2>
         <p style="margin:15px 0;color:#444;">
-            I just wanted to remind you how special you are to me.  
             You make my world brighter every single day ✨
         </p>
 
         <div class="audio-card">
-            <img src="your-image.jpg" class="audio-img">
-            <h3 style="margin-bottom:10px;">Our Song 💖</h3>
 
-            <audio controls>
-                <source src="love.mp3" type="audio/mpeg">
+            <!-- Cover Image -->
+            <img src="cover.jpg" class="audio-img">
+
+            <!-- Visualizer -->
+            <canvas id="visualizer"></canvas>
+
+            <!-- Audio -->
+            <audio id="audio" controls>
+                <source src="your-audio-file.mp3" type="audio/mpeg">
             </audio>
+
         </div>
     </div>
 </div>
@@ -180,6 +192,52 @@ for(let i=0;i<15;i++){
 function openMessage(){
     document.getElementById("firstPage").style.display="none";
     document.getElementById("messagePage").classList.add("show");
+}
+
+/* REAL SYNCED VISUALIZER */
+const audio = document.getElementById("audio");
+const canvas = document.getElementById("visualizer");
+const ctx = canvas.getContext("2d");
+
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
+
+let audioCtx;
+let analyser;
+let source;
+
+audio.onplay = () => {
+    if(!audioCtx){
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        source = audioCtx.createMediaElementSource(audio);
+
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+
+        analyser.fftSize = 256;
+    }
+    animate();
+};
+
+function animate(){
+    requestAnimationFrame(animate);
+
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    analyser.getByteFrequencyData(dataArray);
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    const barWidth = (canvas.width / bufferLength) * 2;
+    let x = 0;
+
+    for(let i=0;i<bufferLength;i++){
+        const barHeight = dataArray[i]/2;
+        ctx.fillStyle = "#ff4e88";
+        ctx.fillRect(x,canvas.height-barHeight,barWidth,barHeight);
+        x += barWidth + 1;
+    }
 }
 </script>
 
