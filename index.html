@@ -1,274 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>For You ✨</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Sneha 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+body {
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#0b0c1a;
+  color:white;
+  overflow:hidden;
+}.scene { position:absolute; top:0; left:0; width:100%; height:100vh; display:flex; justify-content:center; align-items:center; flex-direction:column; text-align:center; padding:20px; opacity:0; pointer-events:none; transition:0.5s; z-index:2; }
 
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-overflow:hidden;
-background:linear-gradient(270deg,#ff9a9e,#fbc2eb,#a6c1ee,#fad0c4);
-background-size:600% 600%;
-animation:bgMove 12s infinite ease;
-}
+.scene.active { opacity:1; pointer-events:auto; }
 
-@keyframes bgMove{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
-}
+h1 { font-family:'Great Vibes',cursive; font-size:3.5rem; }
 
-/* Sparkles */
-.sparkle{
-position:absolute;
-width:6px;
-height:6px;
-background:white;
-border-radius:50%;
-opacity:.7;
-animation:float 6s linear infinite;
-}
+.typing { white-space:nowrap; overflow:hidden; border-right:2px solid white; width:0; animation:typing 2s steps(30,end) forwards, blink 0.5s infinite; }
 
-@keyframes float{
-from{transform:translateY(100vh);}
-to{transform:translateY(-10vh);}
-}
+@keyframes typing { to { width:100% } } @keyframes blink { 50% { border-color:transparent } }
 
-/* Card */
-.card{
-width:350px;
-height:500px;
-perspective:1000px;
-}
+.chat { max-width:300px; text-align:left; } .msg { background:#1f2235; padding:10px; border-radius:10px; margin:8px 0; opacity:0; animation:fade 0.5s forwards; }
 
-.inner{
-width:100%;
-height:100%;
-position:relative;
-transition:transform .9s;
-transform-style:preserve-3d;
-}
+@keyframes fade { to { opacity:1 } }
 
-.card.flip .inner{
-transform:rotateY(180deg);
-}
+.dark { background:black; }
 
-.face{
-position:absolute;
-width:100%;
-height:100%;
-backface-visibility:hidden;
-border-radius:20px;
-padding:25px;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
+.petal { position:fixed; top:-10px; width:12px; height:12px; background:radial-gradient(circle at 30% 30%, #ffb6c1, #ff4e50); border-radius:50% 70% 50% 70%; opacity:0.8; animation:fall linear forwards; z-index:1; }
 
-background:rgba(255,255,255,.15);
-backdrop-filter:blur(20px);
-box-shadow:0 10px 30px rgba(0,0,0,.25);
-color:white;
-}
+@keyframes fall { 0% { transform:translateY(0) rotate(0deg); opacity:1; } 100% { transform:translateY(110vh) rotate(360deg); opacity:0; } } </style>
 
-/* Back face */
-.back{
-transform:rotateY(180deg);
-}
-
-/* Button ripple */
-button{
-margin-top:20px;
-padding:14px 30px;
-border:none;
-border-radius:30px;
-background:white;
-color:#ff4e88;
-font-weight:600;
-cursor:pointer;
-position:relative;
-overflow:hidden;
-}
-
-button::after{
-content:"";
-position:absolute;
-width:0;
-height:0;
-border-radius:50%;
-background:rgba(0,0,0,.1);
-transform:translate(-50%,-50%);
-}
-
-button:active::after{
-width:200px;
-height:200px;
-transition:.4s;
-}
-
-/* Audio */
-img{
-width:100%;
-border-radius:12px;
-margin:10px 0;
-}
-
-canvas{
-width:100%;
-height:70px;
-}
-
-audio{
-width:100%;
-}
-
-h2{color:#ff4e88;}
-
-/* Message fade animation */
-#messageText{
-margin:10px 0;
-transition:opacity .4s ease;
-cursor:pointer;
-}
-.fade{
-opacity:0;
-}
-</style>
 </head>
-
-<body>
-
-<script>
-/* Sparkles */
-for(let i=0;i<25;i++){
-let s=document.createElement("div");
-s.className="sparkle";
-s.style.left=Math.random()*100+"vw";
-s.style.animationDuration=(4+Math.random()*4)+"s";
-document.body.appendChild(s);
-}
-</script>
-
-<div class="card" id="card">
-<div class="inner">
-
-<!-- Front -->
-<div class="face">
-<h1>For You ✨</h1>
-<p>Tap to reveal something special</p>
-<button onclick="flip()">Open</button>
-</div>
-
-<!-- Back -->
-<div class="face back">
-
-<h2>Hey You ❤️</h2>
-
-<p id="messageText">
-You make my world brighter every day ✨
-</p>
-
-<img src="your-image.jpg">
-
-<canvas id="viz"></canvas>
-
-<audio id="audio" controls>
-<source src="love.mp3">
-</audio>
-
-</div>
-</div>
-</div>
+<body><div class="scene active" id="scene0">
+  <h1>Hey Sneha 💖</h1>
+  <p>I made something for you...</p>
+</div><div class="scene" id="scene1"><p class="typing">I was thinking what to give you...</p></div>
+<div class="scene" id="scene2"><p class="typing">But nothing feels enough for you.</p></div>
+<div class="scene" id="scene3"><p class="typing">Because you are not just my best friend...</p></div>
+<div class="scene" id="scene4"><p class="typing">You are someone I never want to lose.</p></div><div class="scene" id="chatScene">
+  <div class="chat" id="chat"></div>
+</div><div class="scene dark" id="finalScene">
+  <h2 id="finalText"></h2>
+</div><audio id="music" src="https://www.bensound.com/bensound-music/bensound-romantic.mp3"></audio>
 
 <script>
-
-/***** CARD FLIP *****/
-function flip(){
-document.getElementById("card").classList.toggle("flip");
+function show(id){
+  document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
-/***** MESSAGE ROTATOR *****/
+function startFlow(){
+  document.getElementById('music').play();
 
-const messages = [
-"You make my world brighter every day ✨",
-"Talking to you is my favorite part of the day 💫",
-"You are my happy place 🌸",
-"Life feels softer when you're around 💖",
-"You turn ordinary moments into magic ✨",
-"Every smile of yours is priceless 🌟",
-"Being with you feels like home 🫶"
-];
-
-let msgIndex = 0;
-const msgEl = document.getElementById("messageText");
-
-function changeMessage(){
-msgEl.classList.add("fade");
-
-setTimeout(()=>{
-msgIndex = (msgIndex + 1) % messages.length;
-msgEl.textContent = messages[msgIndex];
-msgEl.classList.remove("fade");
-},400);
+  setTimeout(()=>show('scene1'),2000);
+  setTimeout(()=>show('scene2'),4500);
+  setTimeout(()=>show('scene3'),7000);
+  setTimeout(()=>show('scene4'),9500);
+  setTimeout(showChat,12000);
 }
 
-setInterval(changeMessage, 4000);
+function showChat(){
+  show('chatScene');
+  const chat=document.getElementById('chat');
+  chat.innerHTML="";
 
-/* tap to skip */
-msgEl.addEventListener("click", changeMessage);
+  const messages=[
+    "You know...",
+    "I don’t say this often...",
+    "But you matter to me a lot.",
+    "More than you realize.",
+    "Life feels better with you."
+  ];
 
-/***** VISUALIZER *****/
+  messages.forEach((m,i)=>{
+    setTimeout(()=>{
+      const div=document.createElement('div');
+      div.className='msg';
+      div.innerText=m;
+      chat.appendChild(div);
+    },i*700);
+  });
 
-const audio=document.getElementById("audio");
-const canvas=document.getElementById("viz");
-const ctx=canvas.getContext("2d");
-
-canvas.width=300;
-canvas.height=70;
-
-let ac,an,src;
-
-audio.onplay=()=>{
-if(!ac){
-ac=new AudioContext();
-an=ac.createAnalyser();
-src=ac.createMediaElementSource(audio);
-src.connect(an);
-an.connect(ac.destination);
-an.fftSize=128;
-}
-draw();
-};
-
-function draw(){
-requestAnimationFrame(draw);
-
-let buffer=new Uint8Array(an.frequencyBinCount);
-an.getByteFrequencyData(buffer);
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-let w=canvas.width/buffer.length;
-
-for(let i=0;i<buffer.length;i++){
-let h=buffer[i]/2;
-ctx.fillStyle="rgba(255,78,136,0.9)";
-ctx.fillRect(i*w,canvas.height-h,w-2,h);
-}
+  setTimeout(showFinal,6000);
 }
 
-</script>
+function showFinal(){
+  show('finalScene');
+  const text=document.getElementById('finalText');
 
-</body>
+  const lines=[
+    "Just promise me one thing...",
+    "Don’t ever leave my life.",
+    "Happy Birthday Sneha 💖"
+  ];
+
+  let i=0;
+  function next(){
+    if(i<lines.length){
+      text.innerText=lines[i];
+      i++;
+      setTimeout(next,1800);
+    }
+  }
+  next();
+}
+
+// start automatically after first screen
+setTimeout(startFlow,2000);
+
+// petals
+setInterval(()=>{
+  const petal=document.createElement('div');
+  petal.className='petal';
+  petal.style.left=Math.random()*100+'vw';
+  petal.style.animationDuration=(Math.random()*3+4)+'s';
+  petal.style.opacity=Math.random();
+  document.body.appendChild(petal);
+  setTimeout(()=>petal.remove(),7000);
+},300);
+</script></body>
 </html>
